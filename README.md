@@ -1,6 +1,6 @@
 ---
 
-#🎨 PngKit##🌟 Visión General del Proyecto**PngKit** es una plataforma social diseñada específicamente para artistas, ilustradores y creativos. Nuestro objetivo es crear un espacio donde los usuarios puedan **buscar referencias e inspiración**, coleccionar material de apoyo, interactuar con otros artistas y, por supuesto, **publicar y compartir sus propias obras** de arte digital o tradicional.
+🎨 PngKit🌟 Visión General del Proyecto**PngKit** es una plataforma social diseñada específicamente para artistas, ilustradores y creativos. Nuestro objetivo es crear un espacio donde los usuarios puedan **buscar referencias e inspiración**, coleccionar material de apoyo, interactuar con otros artistas y, por supuesto, **publicar y compartir sus propias obras** de arte digital o tradicional.
 
 Es la comunidad ideal para encontrar el *kit* de recursos e inspiración que todo artista necesita.
 
@@ -33,8 +33,6 @@ Es la comunidad ideal para encontrar el *kit* de recursos e inspiración que tod
 
 ###1. Clonar el Repositorio```bash
 git clone https://github.com/tu-usuario/PngKit.git
-
-```
 
 Copia el contenido del repositorio en el directorio raíz de tu servidor web local (ej. `htdocs` en XAMPP).
 

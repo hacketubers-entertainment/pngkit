@@ -31,8 +31,8 @@ Es la comunidad ideal para encontrar el *kit* de recursos e inspiración que tod
 
   PrerrequisitosAsegúrate de tener instalado un paquete de servidor local como **XAMPP, WAMP, o MAMP**.
 
-  1. Clonar el Repositorio```bash
-git clone https://github.com/tu-usuario/PngKit.git
+  1. Clonar el Repositorio ``bash
+git clone https://github.com/tu-usuario/PngKit.git\``
 
 Copia el contenido del repositorio en el directorio raíz de tu servidor web local (ej. `htdocs` en XAMPP).
 

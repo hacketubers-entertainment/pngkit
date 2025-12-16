@@ -11,10 +11,14 @@
 </head>
 <body>
 <?php
-include "conexion.php";
+include "../conexion.php";
     session_start();
+    if (!isset($_SESSION['usuario'])) {
+        header('Location: ../index.php');
+        exit;
+    }
     $id = $_SESSION['usuario']['id'];
-    if ($_SESSION['usuario']['modo']=='true'){
+    if (isset($_SESSION['usuario']['modo']) && $_SESSION['usuario']['modo']=='true'){
         echo'<link rel="stylesheet" href="../css/modo_oscuro/redes_sociales.css">';
         echo '<link rel="stylesheet" href="../css/modo_oscuro/styl.css">';
         echo '<link rel="stylesheet" href="../css/modo_oscuro/estilos-subimge.css">';
@@ -25,13 +29,13 @@ include "conexion.php";
         echo '<link rel="stylesheet" href="../css/estilos-subimge.css">';
         $modo_oscuro = false;
     }
-    $mysqli -> query("SET NAMES 'utf8");
+    $mysqli -> query("SET NAMES 'utf8'");
 
     
     $sql = "SELECT * FROM configuracion_perfil WHERE id_usuario = '$id'";
     // Ejecutar la consulta
     $result = $mysqli->query($sql);
-    $p = $result->fetch_assoc()
+    $p = $result ? $result->fetch_assoc() : array();
     ?>
 <header>
         <nav>
@@ -67,16 +71,16 @@ include "conexion.php";
     ?>
 
     <?php
-    if ($p['nombre_usuario']) {
+    if (isset($p) && $p && isset($p['nombre_usuario']) && $p['nombre_usuario']) {
         echo '<div id="cont_nombre_verficado"><b id="nombre_usuario">'.$p['nombre_usuario'].'</b>';
-        if($p['verificado']){
+        if(isset($p['verificado']) && $p['verificado']){
             echo '<img src="imagenes/verificado.svg" alt=""></div>';
         }else{
             echo '</div>';
         }
         echo '<b id="nombre">nombre</b>';
     }else{
-        echo '<b id="nombre_usuario">'.$_SESSION['usuario']['nombre'].'</b>
+        echo '<b id="nombre_usuario">'.htmlspecialchars($_SESSION['usuario']['nombre'], ENT_QUOTES, 'UTF-8').'</b>
         <b id="nombre">nombre</b>';
     }
     ?>
@@ -87,13 +91,13 @@ include "conexion.php";
         $nombre = $_SESSION['usuario']['nombre'];
         $id = $_SESSION['usuario']['id'];
 
-        $mysqli -> query("SET NAMES 'utf8");
+        $mysqli -> query("SET NAMES 'utf8'");
 
         // Consulta SQL para verificar las credenciales
         $sql = "SELECT * FROM redes_sociales WHERE id_usuario = '$id'";
         $result = $mysqli->query($sql);
-        $row = $result->fetch_assoc();
-        if ($result->num_rows > 0){
+        $row = $result ? $result->fetch_assoc() : array();
+        if ($result && $result->num_rows > 0){
             $facebook = $row['facebook'];
             $instagram = $row['instagram'];
             $x = $row['x'];
@@ -155,7 +159,7 @@ if (isset($_SESSION['usuario'])) {
         </a>';
     $nombre = $_SESSION['usuario']['nombre'];
     $id = $_SESSION['usuario']['id']; // Obtener el ID del usuario de la sesión
-    $mysqli -> query("SET NAMES 'utf8");
+    $mysqli -> query("SET NAMES 'utf8'");
 
     // Consulta SQL para verificar las credenciales
     $sql = "SELECT id, nombre_carpeta FROM carpetas WHERE id_usuario = '$id'";
@@ -202,9 +206,9 @@ if (isset($_SESSION['usuario'])) {
 
         <?php
             if (isset($_GET['carpeta_subir'])) {
-                echo $_GET['carpeta_subir'];
+                echo htmlspecialchars($_GET['carpeta_subir'], ENT_QUOTES, 'UTF-8');
                 echo '<select id="folderName" name="folder">
-                <option value="'.$_GET['carpeta_subir'].'">'.$_GET['carpeta_subir'].'</option>';
+                <option value="'.htmlspecialchars($_GET['carpeta_subir'], ENT_QUOTES, 'UTF-8').'">'.htmlspecialchars($_GET['carpeta_subir'], ENT_QUOTES, 'UTF-8').'</option>';
             }else{
                 echo '<select id="folderName" name="folder">
                 <option value="">--Selecciona una carpeta--</option>';

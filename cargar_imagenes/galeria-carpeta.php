@@ -7,15 +7,16 @@
 </head>
 <body>
 <?php
-    session_start();
-    if ($_SESSION['usuario']['modo']=='true'){
-        echo '<link rel="stylesheet" href="../css/modo_oscuro/styl.css">';
-        echo '<link rel="stylesheet" href="../css/modo_oscuro/galeri.css">';
-    }else{
-        echo '<link rel="stylesheet" href="../css/styles.css">';
-        echo '<link rel="stylesheet" href="../css/galerie.css">';
-    }
-    ?>
+include "../conexion.php";
+session_start();
+if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['modo']) && $_SESSION['usuario']['modo']=='true'){
+    echo '<link rel="stylesheet" href="../css/modo_oscuro/styl.css">';
+    echo '<link rel="stylesheet" href="../css/modo_oscuro/galeri.css">';
+}else{
+    echo '<link rel="stylesheet" href="../css/styles.css">';
+    echo '<link rel="stylesheet" href="../css/galerie.css">';
+}
+?>
 <header>
         <nav>
             <ul>
@@ -33,8 +34,7 @@ echo'<button onclick="goBack()" id="flecha_nav"><img src="imagenes/arrow.svg" al
     </button> <script>
     function goBack() {
     window.history.back();
-    }</script>';
-include "conexion.php"; 
+    }</script>'; 
 // Verifica si los parámetros están presentes en la URL
 if (isset($_GET['parametro1']) && isset($_GET['parametro2'])) {
     
@@ -60,7 +60,7 @@ if (isset($_GET['parametro1']) && isset($_GET['parametro2'])) {
     echo '<div class="info">
     <a id="nombre_usuario" href="../perfil/perfiles.php?parametro1=' . $usuario .'">';
 
-    if ($t['foto_perfil']){
+    if (isset($t) && $t && isset($t['foto_perfil']) && $t['foto_perfil']){
         echo'<img id="foto_perfil" src="'.$t['foto_perfil'].'"></img>';
     }else{
         echo'<img id="foto_perfil" src="https://static.vecteezy.com/system/resources/previews/002/318/271/non_2x/user-profile-icon-free-vector.jpg"></img>';
@@ -73,7 +73,7 @@ if (isset($_GET['parametro1']) && isset($_GET['parametro2'])) {
     </div>
     <div class="contenedor">';
 
-    $mysqli -> query("SET NAMES 'utf8");
+    $mysqli -> query("SET NAMES 'utf8'");
 
     // Consulta SQL para verificar las credenciales
     $sql = "SELECT * FROM imagenes WHERE nombrecarpeta = '$idcarpeta'";
@@ -95,7 +95,7 @@ if (isset($_GET['parametro1']) && isset($_GET['parametro2'])) {
         echo "No se encontraron imágenes.";
     }
 
-    mysqli_close($conexion);
+    mysqli_close($mysqli);
 } else {
 
     echo "Parámetros no encontrados en la URL.";

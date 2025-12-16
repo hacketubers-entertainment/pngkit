@@ -1,10 +1,10 @@
 <?php
 session_start();
-include "conexion.php";
+include "../conexion.php";
 
 // Obtener los detalles de la imagen desde la URL
-$id = $_GET['id'];
-$valor = $_GET['valor'];
+$id = isset($_GET['id']) ? $_GET['id'] : null;
+$valor = isset($_GET['valor']) ? $_GET['valor'] : null;
 
 // Consulta SQL para insertar los detalles de la imagen
 $sentencia = "UPDATE configuracion_perfil SET modo = '$valor' WHERE id_usuario = '$id'";
@@ -24,7 +24,7 @@ if ($mysqli->query($sentencia) === TRUE) {
         'modo' => $valor,
         'descripcion' => $_SESSION['usuario']['descripcion'],
     );
-    mysqli_close($conexion);
+    mysqli_close($mysqli);
     header('Location: ../index.php');
     
     

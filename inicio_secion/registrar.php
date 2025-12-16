@@ -1,13 +1,13 @@
 <?php
 session_start(); // Iniciar la sesión
 
-include "conexion.php";
-$nombre = $_GET['nombre'];
-$correo = $_GET['correo'];
-$contraseña = $_GET['contraseña'];
+include "../conexion.php";
+$nombre = isset($_GET['nombre']) ? $_GET['nombre'] : '';
+$correo = isset($_GET['correo']) ? $_GET['correo'] : '';
+$contraseña = isset($_GET['contraseña']) ? $_GET['contraseña'] : '';
 
 // Establecer la codificación de caracteres
-$mysqli -> query("SET NAMES 'utf8");
+$mysqli -> query("SET NAMES 'utf8'");
 // Consulta SQL para verificar las credenciales
 $sql = "SELECT * FROM usuarios WHERE correo = '$correo'";
 
@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
         'correo' => $correo
     );
 
-    mysqli_close($conexion);
+    mysqli_close($mysqli);
     header('Location: ../index.php');
     exit;
 }

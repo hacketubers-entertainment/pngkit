@@ -7,7 +7,7 @@
     <title>Document</title>
     <?php
     session_start();
-    if ($_SESSION['usuario']['modo']=='true'){
+    if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['modo']) && $_SESSION['usuario']['modo']=='true'){
         echo '<link rel="stylesheet" href="../css/modo_oscuro/styl.css">';
         echo '<link rel="stylesheet" href="../css/modo_oscuro/imagen.css">';
     }else{
@@ -34,7 +34,7 @@ function goBack() {
 window.history.back();
 }</script>
 <?php
-include "conexion.php";
+include "../conexion.php";
 $id_imagen = $_GET['id'];
 $mysqli -> query("SET NAMES 'utf8'");
 $sql = "SELECT i.enlace, i.nombre_imagen, i.descripcion, u.id_usuario, u.nombre_usuario, c.nombre_carpeta, c.estilo, c.id

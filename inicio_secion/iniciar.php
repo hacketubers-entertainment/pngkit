@@ -1,22 +1,42 @@
 <?php
 session_start();
-include "conexion.php"; 
+// 1. Incluye el archivo de conexión, que crea el objeto $mysqli
+include "../conexion.php"; 
 
-// Obtener las credenciales del usuario desde la URL
-$correo = $_GET['correo'];
-$contraseña = $_GET['contraseña'];
+// 2. Establecer la codificación de caracteres de forma segura
+// Usamos la función propia de mysqli en lugar de una consulta SQL, 
+// lo que evita errores de sintaxis como el anterior.
+if (!$mysqli->set_charset("utf8")) {
+    printf("Error cargando el conjunto de caracteres utf8: %s\n", $mysqli->error);
+    exit();
+}
 
-// Establecer la codificación de caracteres
-$mysqli -> query("SET NAMES 'utf8");
+// 3. Obtener y sanear las credenciales del usuario desde la URL ($_GET)
+$correo = $_GET['correo'] ?? ''; // Usamos ?? para evitar errores si no existe la variable
+$contraseña = $_GET['contraseña'] ?? '';
 
-// Consulta SQL para verificar las credenciales
-$sql = "SELECT * FROM usuarios WHERE correo = '$correo' AND contraseña = '$contraseña'";
+// --- INICIO DE SESIÓN SEGURO CON SENTENCIAS PREPARADAS ---
 
-// Ejecutar la consulta
-$result = $mysqli->query($sql);
+// 4. Preparar la consulta SQL con placeholders (?)
+// NOTA: Nunca selecciones la contraseña del usuario; sólo la necesitas para la verificación.
+$stmt = $mysqli->prepare("SELECT id, nombre FROM usuarios WHERE correo = ? AND contraseña = ?");
 
-// Verificar si se encontraron resultados
-if ($result->num_rows > 0) {
+if ($stmt === false) {
+    die("Error al preparar la consulta: " . $mysqli->error);
+}
+
+// 5. Vincular los parámetros (los valores reales) a los placeholders
+// "ss" significa que ambos parámetros son strings (cadenas de texto)
+$stmt->bind_param("ss", $correo, $contraseña); 
+
+// 6. Ejecutar la consulta
+$stmt->execute();
+
+// 7. Obtener el resultado
+$result = $stmt->get_result();
+
+// 8. Verificar si se encontraron resultados
+if ($result->num_rows === 1) {
     // El usuario existe y las credenciales son válidas
     $usuario = $result->fetch_assoc(); // Obtener la fila del usuario
 
@@ -26,13 +46,23 @@ if ($result->num_rows > 0) {
         'nombre' => $usuario['nombre'],
     );
 
-    mysqli_close($conexion);
+    // Cerrar la sentencia y la conexión antes de redirigir
+    $stmt->close();
+    $mysqli->close();
+
     header('Location: ../index.php');
     exit;
+
 } else {
-    // No se encontraron resultados
-    mysqli_close($conexion);
-    header('Location: iniciar_secion.php');
-    echo "Credenciales inválidas.";
+    // No se encontraron resultados (credenciales inválidas)
+
+    // Cerrar la sentencia y la conexión
+    $stmt->close();
+    $mysqli->close();
+
+    header('Location: iniciar_secion.php?error=credenciales');
+    // Nota: Es mejor redirigir a la página de login y mostrar el error allí, 
+    // en lugar de usar 'echo' aquí, que podría no ejecutarse bien con el 'header()'.
     exit;
 }
+?>

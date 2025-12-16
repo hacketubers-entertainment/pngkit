@@ -1,3 +1,12 @@
+<?php
+session_start();
+include "../conexion.php";
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../index.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,8 +19,7 @@
     
 </head>
 <?php
-    session_start();
-    if ($_SESSION['usuario']['modo']=='true'){
+    if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['modo']) && $_SESSION['usuario']['modo']=='true'){
         echo '<link rel="stylesheet" href="../css/modo_oscuro/styl.css">';
         echo '<link rel="stylesheet" href="../css/modo_oscuro/estilos-subimge.css">';
         echo '<link rel="stylesheet" href="../css/modo_oscuro/redes_sociales.css">';
@@ -36,10 +44,8 @@
 
     <div id="perfil">
     <?php
-    session_start();
     $nombre = $_SESSION['usuario']['id'];
     $perfil = $_SESSION['usuario']['nombre'];
-    include "conexion.php"; 
     // Verifica si los parámetros están presentes en la URL
     if (isset($_GET['parametro1'])) {
         
@@ -56,13 +62,13 @@
         $sql = "SELECT * FROM configuracion_perfil WHERE id_usuario = '$usuario'"; 
         // Ejecutar la consulta
         $result = $mysqli->query($sql);
-        $row = $result->fetch_assoc();
-        if($row['foto_perfil'] != ""){
+        $row = $result ? $result->fetch_assoc() : array();
+        if(isset($row['foto_perfil']) && $row['foto_perfil'] != ""){
             echo '<img id="foto_perfil" src="'. $row['foto_perfil'] .'"> ';
         }else{
             echo '<img id="foto_perfil" src="https://static.vecteezy.com/system/resources/previews/002/318/271/non_2x/user-profile-icon-free-vector.jpg" alt="">';
         }
-        if($row['foto_banner'] != ""){
+        if(isset($row['foto_banner']) && $row['foto_banner'] != ""){
             echo '<img id="foto_banner" src="'. $row['foto_banner'] .'"> ';
         } else {
             echo '<img id="foto_banner" src="https://premiotransparencia.org.mx/wp-content/uploads/2023/09/Diferencia-entre-el-color-lila-y-orado-1024x497.jpg"></img>';
@@ -72,30 +78,30 @@
 function goBack() {
 window.history.back();
 }</script>';
-        echo '<div id="cont_nombre_verficado"><b id="nombre_usuario">'. $row['nombre_usuario'] .'</b>';
-        if($row['verificado']){
+        echo '<div id="cont_nombre_verficado"><b id="nombre_usuario">'. (isset($row['nombre_usuario']) ? $row['nombre_usuario'] : '') .'</b>';
+        if(isset($row['verificado']) && $row['verificado']){
             echo '<img src="imagenes/verificado.svg" alt=""></div>';
         }else{
             echo '</div>';
         }
-        if($row['descripcion'] != ""){
+        if(isset($row['descripcion']) && $row['descripcion'] != ""){
             echo '<p id="descripcion">'. $row['descripcion'] .'</p>';
         }
-        $mysqli -> query("SET NAMES 'utf8");
+        $mysqli -> query("SET NAMES 'utf8'");
 
         // Consulta SQL para verificar las credenciales
         $sql = "SELECT * FROM redes_sociales WHERE id_usuario = '$usuario'";
         $result = $mysqli->query($sql);
-        $k = $result->fetch_assoc();
-        if ($result->num_rows > 0){
-            $facebook = $k['facebook'];
-            $instagram = $k['instagram'];
-            $x = $k['x'];
-            $discord = $k['discord'];
-            $reddit = $k['reddit'];
-            $pinterest = $k['pinterest'];
-            $linkedin = $k['linkedin'];
-            $sitio_web = $k['sitio_web'];
+        $k = $result ? $result->fetch_assoc() : array();
+        if ($result && $result->num_rows > 0){
+            $facebook = isset($k['facebook']) ? $k['facebook'] : '';
+            $instagram = isset($k['instagram']) ? $k['instagram'] : '';
+            $x = isset($k['x']) ? $k['x'] : '';
+            $discord = isset($k['discord']) ? $k['discord'] : '';
+            $reddit = isset($k['reddit']) ? $k['reddit'] : '';
+            $pinterest = isset($k['pinterest']) ? $k['pinterest'] : '';
+            $linkedin = isset($k['linkedin']) ? $k['linkedin'] : '';
+            $sitio_web = isset($k['sitio_web']) ? $k['sitio_web'] : '';
             echo '<div class="redes_sociales">';
             if($facebook){
                 echo '<a href="'. $facebook .'"><img id="facebook" class="iconos-contacto" src="imagenes/facebook.svg" alt="" srcset=""></a>';
@@ -140,13 +146,13 @@ window.history.back();
 
     <div class="carpetas">
     <?php
-    include "conexion.php"; 
+    include "../conexion.php";
     // Verifica si los parámetros están presentes en la URL
     if (isset($_GET['parametro1'])) {
         
         // Obtén los valores de los parámetros
         $usuario = $_GET['parametro1'];
-        $mysqli -> query("SET NAMES 'utf8");
+        $mysqli -> query("SET NAMES 'utf8'");
 
         // Consulta SQL para verificar las credenciales
         $sql = "SELECT * FROM carpetas WHERE id_usuario = '$usuario'";
@@ -176,7 +182,7 @@ window.history.back();
     
     ?>
     </div>
-    <script src="js/script_seguidores.js"></script>
+    <script src="js/script_seguidores.js?v=<?php echo time(); ?>"></script>
     <script>verificarSeguido();</script>
 </body>
 </html>

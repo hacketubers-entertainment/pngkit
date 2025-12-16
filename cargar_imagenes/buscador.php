@@ -8,7 +8,7 @@
 <body>
 <?php
     session_start();
-    if ($_SESSION['usuario']['modo']=='true'){
+    if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['modo']) && $_SESSION['usuario']['modo']=='true'){
         echo '<link rel="stylesheet" href="../css/modo_oscuro/styl.css">';
         echo '<link rel="stylesheet" href="../css/modo_oscuro/galeri.css">';
         echo '<link rel="stylesheet" href="../css/buscador.css">';
@@ -36,7 +36,7 @@ window.history.back();
 }</script>
 <div class="info"><b>Resultado de busquedas</b></div>
 <?php
-include "conexion.php"; 
+include "../conexion.php"; 
 // Verifica si los parámetros están presentes en la URL
 if (isset($_GET['parametro'])) {
     
@@ -67,7 +67,7 @@ if (isset($_GET['parametro'])) {
     // Realiza acciones con los valores obtenidos
     
     // Establecer la codificación de caracteres
-    $mysqli -> query("SET NAMES 'utf8");
+    $mysqli -> query("SET NAMES 'utf8'");
 
     
 
@@ -134,7 +134,7 @@ if (isset($_GET['parametro'])) {
             $cont_result = $cont_result + 1;
             echo '<div class="contenedor-perfil">
             <a href="../perfil/perfiles.php?parametro1=' . $e['id_usuario'] . '">';
-            if ($e['foto_perfil']){
+            if (isset($e['foto_perfil']) && $e['foto_perfil']){
                 echo '<img class="imagen_perfil" src="' . $e['foto_perfil'] . '">';
             }else{
                 echo '<img class="imagen_perfil" src="https://static.vecteezy.com/system/resources/previews/002/318/271/non_2x/user-profile-icon-free-vector.jpg">';
@@ -148,7 +148,7 @@ if (isset($_GET['parametro'])) {
     if($cont_result == 0){
         echo '<div class="info"><b>No se encontraro resultados con la palabra '.$palabra.'</b></div>';
     }
-    mysqli_close($conexion);
+    mysqli_close($mysqli);
 } else {
     // Si los parámetros no están presentes, muestra un mensaje de error o realiza otra acción
     echo "Parámetros no encontrados en la URL.";

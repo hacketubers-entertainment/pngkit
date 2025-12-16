@@ -5,8 +5,8 @@ var botonSeguir = document.getElementById('seguir');
 
 // Función para verificar si el perfil ya está seguido
 function verificarSeguido() {
-    // Realiza la solicitud para obtener los datos del usuario
-    fetch(`https://pngkit-5b951-default-rtdb.firebaseio.com/seguidores/${usuario}.json`)
+    // Realiza la solicitud al servidor PHP
+    fetch('gestionar_seguidores.php?accion=verificar')
         .then((response) => {
             if (response.ok) {
                 return response.json();
@@ -15,22 +15,16 @@ function verificarSeguido() {
             }
         })
         .then((data) => {
-            if (data && data.perfilesSeguidos) {
-                if (data.perfilesSeguidos.includes(perfil)) {
-                    // El perfil ya está seguido
-                    botonSeguir.className = "dejar-seguir";
-                    botonSeguir.textContent = 'Dejar de seguir';
-                    botonSeguir.onclick = dejarSeguir;
-                    location.reload;
-                    recargar();
-                } else {
-                    // El perfil no está seguido
-                    botonSeguir.className = "seguir"
-                    botonSeguir.onclick = guardarPerfilSeguido;
-                    botonSeguir.textContent = 'Seguir';
-                    location.reload;
-                    recargar();
-                }
+            if (data.seguidos && data.seguidos.includes(parseInt(perfil))) {
+                // El perfil ya está seguido
+                botonSeguir.className = "dejar-seguir";
+                botonSeguir.textContent = 'Dejar de seguir';
+                botonSeguir.onclick = dejarSeguir;
+            } else {
+                // El perfil no está seguido
+                botonSeguir.className = "seguir"
+                botonSeguir.onclick = guardarPerfilSeguido;
+                botonSeguir.textContent = 'Seguir';
             }
         })
         .catch((error) => {
@@ -40,35 +34,29 @@ function verificarSeguido() {
 
 
 function dejarSeguir(){
-    console.log("dejar de seguirr exitoso")
+    console.log("dejar de seguir exitoso")
     if (usuario && perfil) {
-        const url = `https://pngkit-5b951-default-rtdb.firebaseio.com/seguidores/${usuario}.json`;
+        const formData = new FormData();
+        formData.append('perfil_id', perfil);
 
-        // Obtener datos actuales del usuario
-        fetch(url)
+        fetch('gestionar_seguidores.php?accion=dejarDeSeguir', {
+            method: 'POST',
+            body: formData
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    throw new Error('Error al obtener datos del usuario');
+                    throw new Error('Error al dejar de seguir');
                 }
             })
             .then((data) => {
-                const perfilesSeguidos = data ? data.perfilesSeguidos || [] : [];
-
-                // Eliminar el perfil de la lista
-                const nuevosPerfilesSeguidos = perfilesSeguidos.filter(p => p !== perfil);
-
-                // Actualizar datos en la base de datos
-                return fetch(url, {
-                    method: 'PATCH',
-                    body: JSON.stringify({ perfilesSeguidos: nuevosPerfilesSeguidos })
-                });
-            })
-            .then(() => {
-                verificarSeguido();
-                console.log('Perfil seguido eliminado correctamente.');
-                location.reload();
+                if (data.exito) {
+                    console.log('Perfil dejado de seguir correctamente.');
+                    verificarSeguido();
+                } else {
+                    console.error('Error:', data.error);
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -81,31 +69,27 @@ function dejarSeguir(){
 
 function guardarPerfilSeguido() {
     if (usuario && perfil) {
-        const url = `https://pngkit-5b951-default-rtdb.firebaseio.com/seguidores/${usuario}.json`;
+        const formData = new FormData();
+        formData.append('perfil_id', perfil);
 
-        // Realiza la solicitud para obtener los datos actuales del usuario
-        fetch(url)
+        fetch('gestionar_seguidores.php?accion=seguir', {
+            method: 'POST',
+            body: formData
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    throw new Error('Error al obtener datos del usuario');
+                    throw new Error('Error al seguir perfil');
                 }
             })
             .then((data) => {
-                // Agrega el perfil seguido a la lista existente o crea una nueva lista
-                const perfilesSeguidos = data ? data.perfilesSeguidos || [] : [];
-                perfilesSeguidos.push(perfil);
-
-                // Actualiza los datos en la base de datos
-                return fetch(url, {
-                    method: 'PATCH',
-                    body: JSON.stringify({ perfilesSeguidos })
-                });
-            })
-            .then(() => {
-                verificarSeguido();
-                console.log('Perfil seguido guardado correctamente.');
+                if (data.exito) {
+                    console.log('Perfil seguido guardado correctamente.');
+                    verificarSeguido();
+                } else {
+                    console.error('Error:', data.error);
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -119,11 +103,8 @@ function guardarPerfilSeguido() {
 function leerDatosUsuario() {
     const usuario = document.getElementById('usuario').value;
     if (usuario) {
-        // URL de la base de datos de Firebase
-        const url = `https://pngkit-5b951-default-rtdb.firebaseio.com/seguidores/${usuario}/perfilesSeguidos.json`;
-
-        // Realiza la solicitud para obtener los datos del usuario
-        fetch(url)
+        // Usa el endpoint PHP del servidor
+        fetch('gestionar_seguidores.php?accion=verificar')
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -132,8 +113,8 @@ function leerDatosUsuario() {
                 }
             })
             .then((data) => {
-                if (data) {
-                    const idsSeguidos = Object.values(data).join(',');
+                if (data.seguidos && data.seguidos.length > 0) {
+                    const idsSeguidos = data.seguidos.join(',');
                     obtenerDatosUsuarios(idsSeguidos);
                 } else {
                     const followersList = document.getElementById('lista-seguidos');

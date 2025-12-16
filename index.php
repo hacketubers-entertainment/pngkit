@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+// Procesar solicitudes JSON si existen
+if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['id'])) {
+    // Si se solicita JSON, responder en JSON
+    if (!empty($_GET) || (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+        $id = isset($_SESSION['usuario']['id']) ? $_SESSION['usuario']['id'] : '';
+        header('Content-Type: application/json');
+        echo json_encode(array('id' => $id));
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,8 +23,8 @@
 <body>
 
     <?php
-    session_start();
-    if ($_SESSION['usuario']['modo']=='true'){
+    // La sesión ya fue iniciada arriba
+    if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['modo']) && $_SESSION['usuario']['modo']=='true'){
         echo '<link rel="stylesheet" href="css/modo_oscuro/estiloss.css">';
     }else{
         echo '<link rel="stylesheet" href="css/estilos.css">';
@@ -61,9 +75,11 @@
             $texto = "Carpetas";
             // El usuario tiene carpeta la abrira
             while ($e = $result->fetch_assoc()) {
-                echo $e['usuario'];
-                echo '<a href="cargar_imagenes/buscador.php?parametro=' . $e['nombre_carpeta'] .'">
-                    <p>' . $e['nombre_carpeta'] . '</p>
+                if (isset($e['usuario'])) {
+                    echo $e['usuario'];
+                }
+                echo '<a href="cargar_imagenes/buscador.php?parametro=' . (isset($e['nombre_carpeta']) ? $e['nombre_carpeta'] : '') .'">
+                    <p>' . (isset($e['nombre_carpeta']) ? $e['nombre_carpeta'] : '') . '</p>
                     </a>';
             }
         } else {
@@ -76,7 +92,7 @@
     <div class="contenedor">
     <?php
 include "conexion.php";
-$mysqli->query("SET NAMES 'utf8");
+$mysqli->query("SET NAMES 'utf8'");
 $sql = "SELECT * FROM imagenes ORDER BY id DESC"; // Ordenar por ID en orden descendente
 $result = $mysqli->query($sql);
 
@@ -99,23 +115,6 @@ while ($e = mysqli_fetch_array($result)) {
 }
 ?>
 </div>
-
-
-    <?php
-    
-
-    if (isset($_SESSION['usuario'])) {
-        $usuario = $_SESSION['usuario']; // Guardar los datos del usuario en una variable
-        $id = $_SESSION['id'];
-
-        if (isset($_SESSION['id'])) {
-            $id = $_SESSION['id']; // Obtener el ID del usuario de la sesión
-
-            header('Content-Type: application/json');
-            echo json_encode(array('id' => $id)); // Devolver el ID como una respuesta JSON
-        }
-    }
-    ?>
 
 <script>
         var link = document.createElement('link');

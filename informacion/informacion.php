@@ -8,7 +8,7 @@
 <body>
 <?php
     session_start();
-    if ($_SESSION['usuario']['modo']=='true'){
+    if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['modo']) && $_SESSION['usuario']['modo']=='true'){
         echo '<link rel="stylesheet" href="../css/modo_oscuro/styl.css">';
         echo '<link rel="stylesheet" href="../css/modo_oscuro/informacions.css">';
     }else{

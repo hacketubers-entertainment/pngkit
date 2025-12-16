@@ -1,5 +1,5 @@
 <?php
-include "conexion.php";
+include "../conexion.php";
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_usuario = $_POST["id_usuario"]; // ID del usuario
@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sitio_web = $_POST["sitio_web"]; 
     
 // Establecer la codificación de caracteres
-$mysqli -> query("SET NAMES 'utf8");
+$mysqli -> query("SET NAMES 'utf8'");
 // Consulta SQL para verificar las credenciales
 $sql = "SELECT * FROM redes_sociales WHERE id_usuario = '$id_usuario'";
 
@@ -26,7 +26,7 @@ if ($result->num_rows == 0) {
     $sentencia2 = "UPDATE redes_sociales SET id_usuario = '$id_usuario', facebook = '$facebook', instagram  = '$instagram', x = '$x', discord = '$discord', reddit = '$reddit', pinterest = '$pinterest', linkedin = '$linkedin', sitio_web = '$sitio_web' WHERE id_usuario = '$id_usuario'";
     $resultado = mysqli_query($mysqli, $sentencia) or die ("error al insertar los requisitos");
     $resultado2 = mysqli_query($mysqli, $sentencia2) or die ("error al insertar los requisitos");
-    mysqli_close($conexion);
+    mysqli_close($mysqli);
     header('Location: ../cargar_imagenes/subir-imagen.php');
     exit;
 }else{
@@ -35,7 +35,7 @@ if ($result->num_rows == 0) {
     // Consulta para actualizar el nombre
     $sentencia = "UPDATE redes_sociales SET id_usuario = '$id_usuario', facebook = '$facebook', instagram  = '$instagram', x = '$x', discord = '$discord', reddit = '$reddit', pinterest = '$pinterest', linkedin = '$linkedin', sitio_web = '$sitio_web' WHERE id_usuario = '$id_usuario'";
     $resultado = mysqli_query($mysqli, $sentencia) or die ("error al insertar los requisitos");
-    mysqli_close($conexion);
+    mysqli_close($mysqli);
     header('Location: ../cargar_imagenes/subir-imagen.php');
     exit;
 }

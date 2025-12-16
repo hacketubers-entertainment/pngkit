@@ -1,12 +1,12 @@
 <?php
-include "conexion.php";
+include "../conexion.php";
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_usuario = $_POST["id_usuario"]; // ID del usuario
     $nuevo_nombre = $_POST["nuevo_nombre"]; // Nuevo nombre
     
 // Establecer la codificación de caracteres
-$mysqli -> query("SET NAMES 'utf8");
+$mysqli -> query("SET NAMES 'utf8'");
 // Consulta SQL para verificar las credenciales
 $sql = "SELECT * FROM configuracion_perfil WHERE id_usuario = '$id_usuario'";
 
@@ -19,14 +19,14 @@ if ($result->num_rows == 0) {
     $sentencia2 = "UPDATE configuracion_perfil SET nombre_usuario = '$nuevo_nombre' WHERE id_usuario = '$id_usuario'";
     $resultado = mysqli_query($mysqli, $sentencia) or die ("error al insertar los requisitos");
     $resultado2 = mysqli_query($mysqli, $sentencia2) or die ("error al insertar los requisitos");
-    mysqli_close($conexion);
+    mysqli_close($mysqli);
     header('Location: ../cargar_imagenes/subir-imagen.php');
     exit;
 }else{
     // Consulta para actualizar el nombre
     $sentencia = "UPDATE configuracion_perfil SET nombre_usuario = '$nuevo_nombre' WHERE id_usuario = '$id_usuario'";
     $resultado = mysqli_query($mysqli, $sentencia) or die ("error al insertar los requisitos");
-    mysqli_close($conexion);
+    mysqli_close($mysqli);
     header('Location: ../cargar_imagenes/subir-imagen.php');
     exit;
 }

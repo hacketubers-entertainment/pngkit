@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion.php';
+include '../conexion.php';
 
 $ids = explode(',', $_POST['ids']);
 
@@ -20,7 +20,7 @@ if (count($ids) > 0) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            if ($row["foto_perfil"]){
+            if (isset($row["foto_perfil"]) && $row["foto_perfil"]){
                 echo '<li class="seguidos-li"><div class="div-lista-segudos"><a href="perfiles.php?parametro1=' . $row["id_usuario"] . '"><img class="foto_perfil" src="'.$row["foto_perfil"].'"></img>' . $row["nombre_usuario"] . '</a></div></li>';
             }else{
                 echo '<li class="seguidos-li"><div class="div-lista-segudos"><a href="perfiles.php?parametro1=' . $row["id_usuario"] . '"><img class="foto_perfil" src="https://static.vecteezy.com/system/resources/previews/002/318/271/non_2x/user-profile-icon-free-vector.jpg"></img>' . $row["nombre_usuario"] . '</a></div></li>';

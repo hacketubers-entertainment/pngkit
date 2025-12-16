@@ -9,7 +9,11 @@
 <body>
 <?php
     session_start();
-    if ($_SESSION['usuario']['modo']=='true'){
+    if (!isset($_SESSION['usuario'])) {
+        header('Location: ../inicio_secion/iniciar_secion.php');
+        exit;
+    }
+    if (isset($_SESSION['usuario']['modo']) && $_SESSION['usuario']['modo']=='true'){
         echo '<link rel="stylesheet" href="../css/modo_oscuro/styl.css">';
         echo '<link rel="stylesheet" href="../css/modo_oscuro/estilos-subimge.css">';
     }else{
@@ -36,11 +40,11 @@ window.history.back();
     <div id="lista-seguidos">
         <?php
         $nombre = $_SESSION['usuario']['id'];
-        echo '<input type="hidden" id="usuario" value="'.$nombre.'"><input type="hidden" id="perfil_actual" value="'.$usuario.'">';
+        echo '<input type="hidden" id="usuario" value="'.$nombre.'"><input type="hidden" id="perfil_actual" value="'.$nombre.'">';
         ?>
         
     </div>
-    <script src="js/script_seguidores.js"></script>
+    <script src="js/script_seguidores.js?v=<?php echo time(); ?>"></script>
     <script>leerDatosUsuario()</script>
 </body>
 </html>

@@ -6,11 +6,8 @@ include "../conexion.php";
 $id = isset($_GET['id']) ? $_GET['id'] : null;
 $valor = isset($_GET['valor']) ? $_GET['valor'] : null;
 
-// Consulta SQL para insertar los detalles de la imagen
+// Consulta SQL para actualizar el modo
 $sentencia = "UPDATE configuracion_perfil SET modo = '$valor' WHERE id_usuario = '$id'";
-
-// Ejecutar la consulta
-$result = $mysqli->query($sql);
 
 // Ejecutar la consulta
 if ($mysqli->query($sentencia) === TRUE) {

@@ -1,0 +1,42 @@
+.redes_sociales{
+    filter: invert(100%);
+    margin-top: 10px;
+}
+
+
+.iconos-contacto{
+    margin: 5px;
+    transition: 0.9s;
+}
+#facebook:hover{
+    filter: invert(0%);
+    filter: drop-shadow(1px 1px 3px #ffbb01);
+}
+#linkedin:hover{
+    filter: invert(0%);
+    filter: drop-shadow(1px 1px 3px #ff0101);
+}
+#instagram:hover{
+    filter: invert(0%);
+    filter: drop-shadow(1px 1px 3px #1eff00);
+}
+#x:hover{
+    filter: invert(0%);
+    filter: drop-shadow(1px 1px 3px #000);
+}
+#reddit:hover{
+    filter: invert(0%);
+    filter: drop-shadow(1px 1px 3px #01ccff);
+}
+#sitio_web:hover{
+    filter: invert(0%);
+    filter: drop-shadow(1px 1px 3px #f700ff);
+}
+#discord:hover{
+    filter: invert(0%);
+    filter: drop-shadow(1px 1px 3px #974900);
+}
+#pinterest:hover{
+    filter: invert(0%);
+    filter: drop-shadow(1px 1px 3px #01fff2);
+}

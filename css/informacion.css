@@ -1,0 +1,47 @@
+.informacion{
+    text-align: center;
+}
+h2{
+    font-family: "Montserrat";
+    font-size: 34px;
+}
+span{
+    font-family: "Montserrat";
+    font-size: 20px;
+}
+.contenedores{
+    align-items: center;
+    display: flex;
+    margin: 30px;
+}
+img{
+    width: 50%;
+}
+.texto-mediano{
+    font-family: "Montserrat";
+    font-size: 16px;
+}
+.contenedor-texto{
+    margin: 20px;
+}
+@font-face {
+    font-family: "Montserrat";
+    src:url("Montserrat/Montserrat-VariableFont_wght.ttf");
+}
+#flecha_nav{
+    margin-top: 10px;
+    border: 0px;
+    padding: 8px;
+    background-color: #6f009b;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 10;
+    margin-bottom: 50px;
+    margin-left: 3px;
+    box-shadow: 3px 3px 7px black;
+}
+#flecha_nav img{
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(5px 3px 3px #000000);
+}

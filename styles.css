@@ -1,0 +1,66 @@
+body{
+    background-color: #f8e7ff;
+}
+h1{
+    margin: 10px;
+    margin-bottom: 50px;
+    width: 100%;
+    font-size: 54px;
+    font-family: "Mi fuente";
+    color: #e8efff;
+}
+header{
+    position: sticky;
+    top: 5px;
+}
+ul {
+    display: flex;
+    position: sticky;
+    top: 1;
+    border-radius: 2px 2px 10px 10px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #6f009b;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.432);
+  }
+  
+  li {
+    width: flex;
+    float: left;
+  }
+  
+  li a {
+    font-family: "Mi fuente";
+    display: block;
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  li a:hover {
+    background-color: #2E4053;
+  }
+
+  @font-face {
+    font-family: "Mi fuente";
+    src:url("Recky.ttf");
+    }
+    
+    .info{
+        text-align: center;
+    }
+    b{
+        margin: 20px;
+        font-size: 45px;
+        font-family: Mi fuente;
+        color: #6f009b;
+    }
+    p{
+        margin: 20px;
+        font-size: 30px;
+        font-family: Mi fuente;
+        color: #00000054;
+    }

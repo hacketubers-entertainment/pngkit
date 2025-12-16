@@ -1,0 +1,18 @@
+.contenedor_perfiles{
+    margin-left: 20px;
+    margin-top: 20px;
+    display: flex;
+}
+.contenedor-perfil{
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(140, 0, 255, 0.336);
+    text-align: center;
+    text-decoration: none;
+    align-items: center;
+}
+.imagen_perfil{
+    background-color: rgba(0, 0, 0, 0.158);
+    width: 150px;
+    border-radius: 50%;
+}

@@ -1,0 +1,44 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+  }
+.formulario-superpuesto {
+    position: fixed;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-decoration: dashed;
+}
+@font-face {
+    font-family: "Montserrat";
+    src:url("Montserrat/Montserrat-VariableFont_wght.ttf");
+}
+#h2_formulario_crearcarpeta{
+    font-family: "Montserrat";
+}
+#div2botones{
+    display: flex;
+}
+.boton_crear_carpeta{
+    color: white;
+    background-color: #4a008f;
+    width: 95%;
+    height: 80px;
+    margin: 2px;
+}
+#volverNormal{
+    width: 95%;
+    margin: 2px;
+}

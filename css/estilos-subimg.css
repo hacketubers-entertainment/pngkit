@@ -1,0 +1,133 @@
+.cont{
+    width: 100%;
+    height: 100vh;
+    background-color: #ecefff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contenedor-form-img{
+    width: 100%;
+    max-width: 450px;
+    background-color: #fff;
+    padding: 50px 60px 70px;
+    text-align: center;
+    border-radius: 25px;
+    box-shadow: 1px 1px 5px rgb(162, 1, 255);
+}
+input{
+
+    text-align: center;
+    border-radius: 10px;
+    width: 100%;
+    height: 80px;
+    background-color: #d7ceff;
+    margin-top: 10px;
+    border: 0px;
+    box-shadow: 2px 2px 5px rgba(66, 0, 104, 0.411);
+}
+button{
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    height: 80px;
+    background-color: #d7ceff;
+    margin-top: 10px;
+    border: 0px;
+    box-shadow: 2px 2px 5px rgba(66, 0, 104, 0.411);
+}
+
+#perfil{
+    margin-top: 20px;
+    background-color: #fae4ff;
+}
+b{
+    margin: 20px;
+    font-size: 40px;
+    font-family: Mi fuente;
+    color: #00000054;
+}
+p{
+    margin: 20px;
+    font-size: 20px;
+    font-family: Mi fuente;
+    color: #4a008f;
+}
+.carpetas{
+    margin-top: 20px;
+    overflow-y: auto;
+    display: flex;
+    transition: 1s;
+}
+.carpeta{
+    min-width: 150px;
+    border-radius: 10px;
+    margin: 5px;
+    text-align: center;
+    background-color: rgba(241, 185, 255, 0.212);
+    border: 1px solid rgb(183, 0, 255);
+    transition: 1s;
+}
+.carpeta:hover{
+    border-radius: 10px;
+    margin: 5px;
+    text-align: center;
+    background-color: rgba(241, 185, 255, 0.363);
+    border: 1px solid #4a008f;
+    box-shadow: 1px 1px 5px rgba(60, 0, 95, 0.466);
+}
+.carpetas:has(:hover) > :not(:hover){
+    transition: 1s;
+    opacity: 0.4;
+}
+#info-folder{
+    font-size: 35px;
+}
+::-webkit-scrollbar{
+    width: 13px;
+    height: 13px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #5e00b6a8;
+    border-radius: 20px;
+}
+::-webkit-scrollbar-track{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #4a008f;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: #4a008f;
+    border-radius: 20px;
+}
+input::file-selector-button {
+    background-color: transparent;
+    width: 100%;
+    font-weight: bold;
+    color: #0000006c;
+    padding: 0.5em;
+    border: thin solid rgba(128, 128, 128, 0);
+    transition: 1s;
+}  
+input[type="file"]::file-selector-button:hover {
+    width: 50%;
+}
+#seguir{
+    cursor: pointer;
+    border-radius: 10px;
+    width: 200px;
+    height: 40px;
+    background-color: #ffffff;
+    color: #4a008f;
+    margin-top: 10px;
+    border: #4a008f solid 1px;
+    box-shadow: 2px 2px 5px rgba(66, 0, 104, 0.411);
+}
+#lista-seguidos{
+    color: #4a008f;
+    background-color: #4a008f;
+}
+@font-face {
+    font-family: "Montserrat";
+    src:url("Montserrat/Montserrat-VariableFont_wght.ttf");
+}

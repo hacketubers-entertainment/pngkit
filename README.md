@@ -16,11 +16,11 @@ Es la comunidad ideal para encontrar el *kit* de recursos e inspiración que tod
 
   🗄️ Esquema de la Base de DatosLa base de datos `pngkit` utiliza las siguientes tablas clave, lo que demuestra la estructura de una aplicación social enfocada en el contenido y el perfil del artista:
 
-| Tablas Principales | Tabla | Descripción | Clave Foránea Clave |
-| --- | --- | --- |
+| Tabla | Descripción | Clave Foránea / Clave |
+| :--- | :--- | :--- |
 | **`usuarios`** | Almacena la información básica de registro (login). | `id` (PK) |
 | **`configuracion_perfil`** | Contiene detalles públicos y de personalización del perfil del artista. | `id_usuario` (FK a `usuarios.id`) |
-| **`imagenes`** | Almacena los metadatos de las obras publicadas por los usuarios. | `usuario` (FK a `usuarios.id` - a pesar de ser `varchar` en el esquema, funciona como FK conceptual) |
+| **`imagenes`** | Almacena los metadatos de las obras publicadas por los usuarios. | `usuario` (FK a `usuarios.id`) |
 | **`carpetas`** | Permite a los usuarios organizar su inspiración o referencias (moodboards). | `id_usuario` (FK a `usuarios.id`) |
 | **`redes_sociales`** | Almacena los enlaces a las redes sociales del artista. | `id_usuario` (PK/FK a `usuarios.id`) |
 | **`seguidores`** | Registra las relaciones de seguimiento entre usuarios. | `usuario_id`, `perfil_id` (FKs a `usuarios.id`) |

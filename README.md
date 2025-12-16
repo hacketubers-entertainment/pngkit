@@ -4,7 +4,7 @@
 
 Es la comunidad ideal para encontrar el *kit* de recursos e inspiración que todo artista necesita.
 
-##🛠️ Tecnologías UtilizadasEste proyecto está construido principalmente con tecnologías tradicionales de desarrollo web, con un enfoque en la simplicidad y la compatibilidad con entornos de hosting estándar.
+  🛠️ Tecnologías UtilizadasEste proyecto está construido principalmente con tecnologías tradicionales de desarrollo web, con un enfoque en la simplicidad y la compatibilidad con entornos de hosting estándar.
 
 | Componente | Tecnología | Descripción |
 | --- | --- | --- |
@@ -14,9 +14,9 @@ Es la comunidad ideal para encontrar el *kit* de recursos e inspiración que tod
 | **Frontend** | **HTML, CSS, JavaScript** | Estructura, estilo e interactividad del lado del cliente. |
 | **Almacenamiento de Archivos** | **Firebase Storage / Rutas URL** | Se utiliza almacenamiento externo (como Firebase) para manejar los enlaces de las imágenes de perfil/banner y las obras (`enlace` en la tabla `imagenes`). |
 
-##🗄️ Esquema de la Base de DatosLa base de datos `pngkit` utiliza las siguientes tablas clave, lo que demuestra la estructura de una aplicación social enfocada en el contenido y el perfil del artista:
+  🗄️ Esquema de la Base de DatosLa base de datos `pngkit` utiliza las siguientes tablas clave, lo que demuestra la estructura de una aplicación social enfocada en el contenido y el perfil del artista:
 
-|Tablas Principales| Tabla | Descripción | Clave Foránea Clave |
+| Tablas Principales | Tabla | Descripción | Clave Foránea Clave |
 | --- | --- | --- |
 | **`usuarios`** | Almacena la información básica de registro (login). | `id` (PK) |
 | **`configuracion_perfil`** | Contiene detalles públicos y de personalización del perfil del artista. | `id_usuario` (FK a `usuarios.id`) |
@@ -27,16 +27,16 @@ Es la comunidad ideal para encontrar el *kit* de recursos e inspiración que tod
 
 > **Nota:** Se utiliza una estrategia de almacenamiento externo para las imágenes, ya que los campos `foto_perfil`, `foto_banner` y `enlace` almacenan URLs de Firebase Storage en lugar de datos binarios en la base de datos.
 
-##🚀 Instalación y Ejecución Local (PHP/MySQL)Sigue estos pasos para configurar y ejecutar **PngKit** en tu entorno local.
+  🚀 Instalación y Ejecución Local (PHP/MySQL)Sigue estos pasos para configurar y ejecutar **PngKit** en tu entorno local.
 
-##PrerrequisitosAsegúrate de tener instalado un paquete de servidor local como **XAMPP, WAMP, o MAMP**.
+  PrerrequisitosAsegúrate de tener instalado un paquete de servidor local como **XAMPP, WAMP, o MAMP**.
 
-##1. Clonar el Repositorio```bash
+  1. Clonar el Repositorio```bash
 git clone https://github.com/tu-usuario/PngKit.git
 
 Copia el contenido del repositorio en el directorio raíz de tu servidor web local (ej. `htdocs` en XAMPP).
 
-##2. Configuración de la Base de Datos1. **Inicia** los servicios de **Apache** y **MySQL** en tu paquete de servidor (XAMPP, WAMP, etc.).
+  2. Configuración de la Base de Datos1. **Inicia** los servicios de **Apache** y **MySQL** en tu paquete de servidor (XAMPP, WAMP, etc.).
 2. Accede a **phpMyAdmin** (generalmente en `http://localhost/phpmyadmin`).
 3. **Crea** una nueva base de datos llamada `pngkit`.
 4. **Importa** el archivo `pngkit.sql` proporcionado en esta nueva base de datos.
@@ -44,7 +44,7 @@ Copia el contenido del repositorio en el directorio raíz de tu servidor web loc
 
 
 
-##3. Configuración del PHP1. Asegúrate de que tus archivos de conexión a la base de datos (p. ej., `conexion.php` o similar) en el código PHP estén apuntando a:
+  3. Configuración del PHP1. Asegúrate de que tus archivos de conexión a la base de datos (p. ej., `conexion.php` o similar) en el código PHP estén apuntando a:
 * **Servidor:** `localhost`
 * **Usuario:** `root` (o tu usuario de MySQL local)
 * **Contraseña:** (vacía, o la que hayas configurado)
@@ -52,7 +52,7 @@ Copia el contenido del repositorio en el directorio raíz de tu servidor web loc
 
 
 
-##4. Acceder al ProyectoAbre tu navegador y navega a la URL local de tu proyecto:
+  4. Acceder al ProyectoAbre tu navegador y navega a la URL local de tu proyecto:
 
 ```
 http://localhost/PngKit/
